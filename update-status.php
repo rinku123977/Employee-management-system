@@ -1,54 +1,45 @@
 <?php
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "employee";
+require 'config.php';
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $leaveRequestId = $_POST['leave_request_id'];
+    $status = $_POST['status'];
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Get data from AJAX request
-$leave_request_id = $_POST['leave_request_id'];
-$status = $_POST['status'];
-$empid = $_POST['empid'];
-$leavedays = $_POST['leavedays'];
-
-// Update only the specific leave request
-$sql = "UPDATE leave_requests SET status = ? WHERE id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("si", $status, $leave_request_id);
-
-// Update leave balances
-$sql_days = "UPDATE leave_balances SET leaves_taken = leaves_taken + ? WHERE employee_id = ?";
-$stmt_days = $conn->prepare($sql_days);
-if ($stmt_days === false) {
-    die("Database error: " . htmlspecialchars($conn->error));
-}
-$stmt_days->bind_param("ii", $leavedays, $empid);
-if ($stmt_days->execute()) {
-    if ($stmt_days->affected_rows > 0) {
-        // Successfully updated
-    } else {
-        echo "No updates made to leave balances. Check employee ID.";
+    // Update the leave request status
+    $updateRequestSql = "UPDATE leave_requests SET status = ? WHERE id = ?";
+    $stmt = $conn->prepare($updateRequestSql);
+    $stmt->bind_param("si", $status, $leaveRequestId);
+    if (!$stmt->execute()) {
+        echo "Error updating leave request: " . $stmt->error;
+        exit();
     }
-} else {
-    die("Error updating leave balances: " . htmlspecialchars($stmt_days->error));
-}
-$stmt_days->close(); // Close the statement after execution
 
-if ($stmt->execute()) {
-    echo "Success";
+    // If approved, update leaves_taken in leave_balances
+    if ($status === "Approved") {
+        // Fetch employee_id and leave_days from the leave request
+        $employeeSql = "SELECT employee_id, leave_days FROM leave_requests WHERE id = ?";
+        $stmt = $conn->prepare($employeeSql);
+        $stmt->bind_param("i", $leaveRequestId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $employeeId = $row['employee_id'];
+        $leaveDays = $row['leave_days'];
+
+        // Update leaves_taken with the leave_days value
+        $updateBalanceSql = "UPDATE leave_balances SET leaves_taken = leaves_taken + ? WHERE employee_id = ?";
+        $stmt = $conn->prepare($updateBalanceSql);
+        $stmt->bind_param("ii", $leaveDays, $employeeId);
+        if (!$stmt->execute()) {
+            echo "Error updating leave_balances: " . $stmt->error;
+            exit();
+        }
+    }
+
+    echo "Status updated successfully.";
 } else {
-    echo "Error updating status: " . $conn->error;
+    echo "Invalid request method.";
 }
 
-// Close statement and connection
-$stmt->close();
 $conn->close();
 ?>

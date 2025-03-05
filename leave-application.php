@@ -88,8 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_leave_request']
                             $error = "You do not have enough remaining leaves.";
                         } else {
                             // Insert leave request
-                            $sql = "INSERT INTO leave_requests (
-                                employee_name, 
+                            $sql = "INSERT INTO leave_requests ( 
                                 employee_id, 
                                 department, 
                                 leave_type, 
@@ -98,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_leave_request']
                                 reason, 
                                 status,
                                 leave_days
-                            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
                             
                             $stmt = $conn->prepare($sql);
                             if ($stmt === false) {
@@ -106,8 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_leave_request']
                             }
                             $status = 'Pending';
                             $stmt->bind_param(
-                                "sssssssss", 
-                                $employeeName,
+                                "ssssssss",
                                 $employeeId,
                                 $department,
                                 $leaveType,
@@ -134,6 +132,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_leave_request']
                                 //     $update_stmt->close();
                                 // }
                                 $success = "Leave request submitted successfully.";
+                                header("Location: leave-application.php"); // Redirect to leave same page
+                                exit();
                             } else {
                                 $error = "Error: " . htmlspecialchars($stmt->error);
                             }
@@ -148,7 +148,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_leave_request']
 }
 
 // Fetch leave request history
-$sql_history = "SELECT id, leave_type, start_date, end_date, reason, status, leave_days 
+$sql_history = "SELECT id, leave_type, start_date, end_date, reason, status, leave_days
                 FROM leave_requests 
                 WHERE employee_id = ? 
                 ORDER BY start_date DESC";
@@ -332,7 +332,7 @@ $conn->close();
                 </div>
                 <div class="balance-card">
                     <h3>Remaining Leaves</h3>
-                    <p><?php echo htmlspecialchars($leave_data['remaining_leaves'] ?? '0'); ?></p>
+                    <p><?php echo htmlspecialchars($leave_data['remaining_leaves']- $leave_data['leaves_taken'] ?? '0'); ?></p>
                 </div>
                 <div class="balance-card">
                     <h3>Leaves Taken</h3>

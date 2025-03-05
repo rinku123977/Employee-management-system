@@ -1,20 +1,9 @@
 <?php
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "employee";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+session_start();
+require_once 'config.php';
 
 // Fetch only pending leave requests with start_date and end_date
-$sql = "SELECT id, employee_id, employee_name, department,leave_type,start_date, end_date, reason, status, lea 
+$sql = "SELECT id, employee_id, employee_name, department, leave_type, start_date, end_date, reason, status 
         FROM leave_requests WHERE status = 'Pending'";
 $result = $conn->query($sql);
 
