@@ -1,0 +1,117 @@
+/* General Styles */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f9fafc;
+    color: #333;
+}
+
+/* Navbar */
+header .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #007bff;
+    padding: 10px 20px;
+    color: #fff;
+}
+
+header .navbar h1 {
+    font-size: 24px;
+}
+
+header .navbar nav {
+    display: flex;
+    gap: 15px;
+}
+
+header .navbar nav a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+header .navbar nav a:hover,
+header .navbar nav a.active {
+    background-color: #0056b3;
+}
+
+/* About Us Section */
+.about-us {
+    padding: 40px 20px;
+    background-color: #fff;
+}
+
+.about-us .container {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.about-us h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+    color: #007bff;
+}
+
+.about-us p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    color: #666;
+}
+
+/* Content Sections */
+.content {
+    margin-top: 30px;
+}
+
+.content .section {
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.content .section h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.content .section p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #555;
+}
+
+.content .section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.content .section ul li {
+    font-size: 14px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.content .section ul li i {
+    margin-right: 8px;
+    color: #28a745;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 10px 0;
+    background-color: #f4f4f4;
+    font-size: 14px;
+    color: #555;
+}
+
+footer p {
+    margin: 0;
+}

@@ -1,0 +1,209 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: #f0f2f5;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Login Box */
+.login-box {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Login Header */
+.login-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login-header header {
+    font-size: 28px;
+    color: #1a73e8;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+/* Input Fields */
+.input-box {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-box i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    font-size: 18px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 15px 15px 15px 45px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.input-field:focus {
+    border-color: #1a73e8;
+    box-shadow: 0 0 5px rgba(26, 115, 232, 0.2);
+    outline: none;
+}
+
+/* Submit Button */
+.input-submit {
+    margin-top: 25px;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    background: #1a73e8;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.submit-btn:hover {
+    background: #1557b0;
+}
+
+/* Signup Link */
+.signup-link {
+    text-align: center;
+    margin-top: 20px;
+    color: #666;
+}
+
+.signup-link a {
+    color: #1a73e8;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.signup-link a:hover {
+    color: #1557b0;
+    text-decoration: underline;
+}
+
+/* Error Message */
+.error-message {
+    background: #fdeded;
+    border: 1px solid #f5c2c7;
+    color: #842029;
+    padding: 12px;
+    border-radius: 5px;
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* Success Message */
+.success-message {
+    background: #d1e7dd;
+    border: 1px solid #badbcc;
+    color: #0f5132;
+    padding: 12px;
+    border-radius: 5px;
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* Remember Me Checkbox */
+.remember-me {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.remember-me input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+.remember-me label {
+    color: #666;
+    font-size: 14px;
+}
+
+/* Forgot Password Link */
+.forgot-password {
+    text-align: right;
+    margin-top: 10px;
+}
+
+.forgot-password a {
+    color: #666;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.forgot-password a:hover {
+    color: #1a73e8;
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .login-box {
+        margin: 20px;
+        padding: 20px;
+    }
+
+    .login-header header {
+        font-size: 24px;
+    }
+
+    .input-field {
+        padding: 12px 12px 12px 40px;
+    }
+
+    .submit-btn {
+        padding: 12px;
+    }
+}
+
+/* Loading State */
+.submit-btn.loading {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.login-box {
+    animation: fadeIn 0.3s ease-out;
+} 
